@@ -470,3 +470,38 @@ tbody tr:hover td {
   background-color: var(--gray);
   cursor: not-allowed;
 }
+
+.summary-card {
+  background-color: var(--white);
+  border: 2px solid var(--light-gray);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.summary-row:last-child {
+  border-bottom: none;
+}
+
+.summary-label {
+  font-size: 0.85rem;
+  color: var(--gray);
+  font-weight: 500;
+}
+
+.summary-value {
+  font-weight: 500;
+  text-align: right;
+}
+
+.summary-value.mono {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
+}

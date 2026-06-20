@@ -82,6 +82,7 @@ function renderizarDoctores() {
   const ledgerWrapper = document.getElementById('doctor-ledger');
   container.innerHTML = '';
   ledgerWrapper.classList.add('hidden');
+  document.getElementById('to-step-3').disabled = true;
 
   MEDICOS.forEach(m => {
     const card = document.createElement('button');
@@ -101,6 +102,7 @@ function renderizarDoctores() {
 function seleccionarMedico(medico) {
   medicoSeleccionado = medico;
   horarioSeleccionado = null;
+  document.getElementById('to-step-3').disabled = true;
   renderizarLedger(medico);
 }
 
@@ -141,7 +143,8 @@ function renderizarLedger(medico) {
         });
         slot.classList.add('selected');
         slot.setAttribute('aria-checked', 'true');
-        medicoSeleccionado = medico;
+        horarioSeleccionado = hora;
+        document.getElementById('to-step-3').disabled = false;
       }
     });
 
@@ -149,9 +152,64 @@ function renderizarLedger(medico) {
   });
 }
 
+function renderizarStep3() {
+  document.getElementById('summary-patient').textContent = pacienteSeleccionado.nombre;
+  document.getElementById('summary-document').textContent = pacienteSeleccionado.documento;
+  document.getElementById('summary-doctor').textContent = medicoSeleccionado.nombre;
+  document.getElementById('summary-spec').textContent = medicoSeleccionado.especialidad;
+  document.getElementById('summary-date').textContent = FECHA_CITA;
+
+  const container = document.getElementById('step3-slots');
+  container.innerHTML = '';
+  document.getElementById('to-step-4').disabled = true;
+
+  medicoSeleccionado.horarios.forEach(hora => {
+    const slot = document.createElement('button');
+    slot.className = 'ledger-slot';
+    slot.setAttribute('role', 'radio');
+    slot.setAttribute('aria-checked', 'false');
+    slot.textContent = hora;
+
+    const ocupado = horariosOcupados.some(
+      o => o.medicoId === medicoSeleccionado.id && o.hora === hora
+    );
+
+    if (ocupado) {
+      slot.classList.add('occupied');
+      slot.disabled = true;
+      slot.setAttribute('aria-disabled', 'true');
+    }
+
+    if (hora === horarioSeleccionado) {
+      slot.classList.add('selected');
+      slot.setAttribute('aria-checked', 'true');
+      document.getElementById('to-step-4').disabled = false;
+    }
+
+    slot.addEventListener('click', () => {
+      if (!slot.disabled) {
+        document.querySelectorAll('#step3-slots .ledger-slot.selected').forEach(s => {
+          s.classList.remove('selected');
+          s.setAttribute('aria-checked', 'false');
+        });
+        slot.classList.add('selected');
+        slot.setAttribute('aria-checked', 'true');
+        horarioSeleccionado = hora;
+        document.getElementById('to-step-4').disabled = false;
+      }
+    });
+
+    container.appendChild(slot);
+  });
+}
+
 function avanzarPaso(paso) {
   const pasos = document.querySelectorAll('.step');
   const secciones = document.querySelectorAll('.wizard-step');
+
+  if (paso === 3) {
+    renderizarStep3();
+  }
 
   pasos.forEach(s => s.classList.remove('active', 'completed'));
   secciones.forEach(s => s.classList.remove('active'));
@@ -177,4 +235,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.getElementById('back-to-1').addEventListener('click', () => {
   avanzarPaso(1);
+});
+
+document.getElementById('to-step-3').addEventListener('click', () => {
+  if (!document.getElementById('to-step-3').disabled) {
+    avanzarPaso(3);
+  }
+});
+
+document.getElementById('back-to-2').addEventListener('click', () => {
+  renderizarDoctores();
+  avanzarPaso(2);
+});
+
+document.getElementById('to-step-4').addEventListener('click', () => {
+  if (!document.getElementById('to-step-4').disabled) {
+    avanzarPaso(4);
+  }
 });

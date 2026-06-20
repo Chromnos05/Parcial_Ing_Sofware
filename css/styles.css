@@ -511,6 +511,26 @@ tbody td.mono {
   font-size: 0.85rem;
 }
 
+.error-message {
+  background-color: var(--error);
+  color: var(--white);
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.error-icon {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.error-text {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
 .success-message {
   background-color: var(--success);
   color: var(--white);

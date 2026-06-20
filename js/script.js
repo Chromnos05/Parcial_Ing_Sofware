@@ -213,13 +213,22 @@ function renderizarStep4() {
   document.getElementById('confirm-date').textContent = FECHA_CITA;
   document.getElementById('confirm-time').textContent = horarioSeleccionado;
 
+  document.getElementById('error-message').classList.add('hidden');
   document.getElementById('success-message').classList.add('hidden');
   document.getElementById('confirm-appointment').classList.remove('hidden');
   document.getElementById('new-appointment').classList.add('hidden');
 }
 
 function registrarCita() {
-  // TODO(mantenimiento-correctivo): validar que el horario no esté ya ocupado antes de confirmar
+  const yaOcupado = horariosOcupados.some(
+    o => o.medicoId === medicoSeleccionado.id && o.hora === horarioSeleccionado
+  );
+
+  if (yaOcupado) {
+    document.getElementById('error-message').classList.remove('hidden');
+    return;
+  }
+
   contadorCitas++;
   const cita = {
     id: contadorCitas,
@@ -269,6 +278,7 @@ function reiniciarFormulario() {
   patientList.innerHTML = '';
   noResults.classList.add('hidden');
 
+  document.getElementById('error-message').classList.add('hidden');
   document.getElementById('success-message').classList.add('hidden');
   document.getElementById('confirm-appointment').classList.remove('hidden');
   document.getElementById('new-appointment').classList.add('hidden');

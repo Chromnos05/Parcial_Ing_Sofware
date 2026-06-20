@@ -6,7 +6,18 @@ const PACIENTES = [
   { id: 5, nombre: 'Laura Rodríguez', documento: '56789012' },
 ];
 
+const MEDICOS = [
+  { id: 1, nombre: 'Dr. Alejandro Vargas', especialidad: 'Cardiología', horarios: ['08:00', '09:00', '10:00', '11:00'] },
+  { id: 2, nombre: 'Dra. Patricia Mendoza', especialidad: 'Pediatría', horarios: ['08:30', '09:30', '10:30', '11:30'] },
+  { id: 3, nombre: 'Dr. Ricardo Navarro', especialidad: 'Dermatología', horarios: ['09:00', '10:00', '11:00', '12:00'] },
+];
+
+const FECHA_CITA = '2026-06-22';
+
 let pacienteSeleccionado = null;
+let medicoSeleccionado = null;
+let horarioSeleccionado = null;
+let horariosOcupados = [];
 
 const searchInput = document.getElementById('search-patient');
 const patientList = document.getElementById('patient-list');
@@ -49,6 +60,9 @@ function renderizarPacientes(pacientes) {
 
 function seleccionarPaciente(paciente) {
   pacienteSeleccionado = paciente;
+  medicoSeleccionado = null;
+  horarioSeleccionado = null;
+  renderizarDoctores();
   avanzarPaso(2);
 }
 
@@ -62,6 +76,78 @@ searchInput.addEventListener('input', () => {
   const resultados = filtrarPacientes(query);
   renderizarPacientes(resultados);
 });
+
+function renderizarDoctores() {
+  const container = document.getElementById('doctor-list');
+  const ledgerWrapper = document.getElementById('doctor-ledger');
+  container.innerHTML = '';
+  ledgerWrapper.classList.add('hidden');
+
+  MEDICOS.forEach(m => {
+    const card = document.createElement('button');
+    card.className = 'doctor-card';
+    card.innerHTML = `
+      <span class="doctor-name">${m.nombre}</span>
+      <span class="doctor-spec">${m.especialidad}</span>
+    `;
+    card.addEventListener('click', () => seleccionarMedico(m));
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') seleccionarMedico(m);
+    });
+    container.appendChild(card);
+  });
+}
+
+function seleccionarMedico(medico) {
+  medicoSeleccionado = medico;
+  horarioSeleccionado = null;
+  renderizarLedger(medico);
+}
+
+function renderizarLedger(medico) {
+  const wrapper = document.getElementById('doctor-ledger');
+  const nameSpan = document.getElementById('ledger-doctor-name');
+  const dateSpan = document.getElementById('ledger-date');
+  const slotsContainer = document.getElementById('ledger-slots');
+
+  nameSpan.textContent = medico.nombre;
+  dateSpan.textContent = FECHA_CITA;
+  slotsContainer.innerHTML = '';
+
+  wrapper.classList.remove('hidden');
+
+  medico.horarios.forEach(hora => {
+    const slot = document.createElement('button');
+    slot.className = 'ledger-slot';
+    slot.setAttribute('role', 'radio');
+    slot.setAttribute('aria-checked', 'false');
+    slot.textContent = hora;
+
+    const ocupado = horariosOcupados.some(
+      o => o.medicoId === medico.id && o.hora === hora
+    );
+
+    if (ocupado) {
+      slot.classList.add('occupied');
+      slot.disabled = true;
+      slot.setAttribute('aria-disabled', 'true');
+    }
+
+    slot.addEventListener('click', () => {
+      if (!slot.disabled) {
+        document.querySelectorAll('.ledger-slot.selected').forEach(s => {
+          s.classList.remove('selected');
+          s.setAttribute('aria-checked', 'false');
+        });
+        slot.classList.add('selected');
+        slot.setAttribute('aria-checked', 'true');
+        medicoSeleccionado = medico;
+      }
+    });
+
+    slotsContainer.appendChild(slot);
+  });
+}
 
 function avanzarPaso(paso) {
   const pasos = document.querySelectorAll('.step');
@@ -84,3 +170,11 @@ function avanzarPaso(paso) {
     if (primerEnfoque) primerEnfoque.focus();
   }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderizarDoctores();
+});
+
+document.getElementById('back-to-1').addEventListener('click', () => {
+  avanzarPaso(1);
+});

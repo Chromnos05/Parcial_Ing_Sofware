@@ -51,7 +51,20 @@
         <p id="no-results" class="no-results hidden">No se encontraron pacientes.</p>
       </section>
 
-      <section class="wizard-step" id="step-2" role="form" aria-label="Paso 2: Seleccionar médico"></section>
+      <section class="wizard-step" id="step-2" role="form" aria-label="Paso 2: Seleccionar médico">
+        <h2 class="step-title">Seleccionar médico</h2>
+        <p class="step-desc">Elija un médico para ver su disponibilidad de horarios.</p>
+        <div id="doctor-list" class="doctor-list"></div>
+        <div id="doctor-ledger" class="ledger-wrapper hidden">
+          <h3 class="ledger-title">Disponibilidad de <span id="ledger-doctor-name"></span></h3>
+          <p class="ledger-date">Fecha: <span id="ledger-date"></span></p>
+          <div class="ledger" id="ledger-slots" role="radiogroup" aria-label="Horarios disponibles"></div>
+        </div>
+        <div class="step-actions">
+          <button class="btn btn-secondary" id="back-to-1">Volver</button>
+        </div>
+      </section>
+
       <section class="wizard-step" id="step-3" role="form" aria-label="Paso 3: Seleccionar horario"></section>
       <section class="wizard-step" id="step-4" role="form" aria-label="Paso 4: Confirmar cita"></section>
     </div>

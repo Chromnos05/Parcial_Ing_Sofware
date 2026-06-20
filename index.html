@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clínica Salvador — Registro de Citas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Clínica Salvador</h1>
+      <p class="subtitle">Registro de Citas Médicas</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <nav class="progress-bar" aria-label="Progreso del registro de cita">
+      <ol>
+        <li class="step active" data-step="1">
+          <span class="step-number">1</span>
+          <span class="step-label">Paciente</span>
+        </li>
+        <li class="step" data-step="2">
+          <span class="step-number">2</span>
+          <span class="step-label">Médico</span>
+        </li>
+        <li class="step" data-step="3">
+          <span class="step-number">3</span>
+          <span class="step-label">Horario</span>
+        </li>
+        <li class="step" data-step="4">
+          <span class="step-number">4</span>
+          <span class="step-label">Confirmar</span>
+        </li>
+      </ol>
+    </nav>
+
+    <div class="wizard">
+      <section class="wizard-step active" id="step-1" role="form" aria-label="Paso 1: Buscar paciente"></section>
+      <section class="wizard-step" id="step-2" role="form" aria-label="Paso 2: Seleccionar médico"></section>
+      <section class="wizard-step" id="step-3" role="form" aria-label="Paso 3: Seleccionar horario"></section>
+      <section class="wizard-step" id="step-4" role="form" aria-label="Paso 4: Confirmar cita"></section>
+    </div>
+  </main>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

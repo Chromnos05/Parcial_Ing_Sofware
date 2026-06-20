@@ -99,10 +99,48 @@
         </div>
       </section>
 
-      <section class="wizard-step" id="step-4" role="form" aria-label="Paso 4: Confirmar cita"></section>
+      <section class="wizard-step" id="step-4" role="form" aria-label="Paso 4: Confirmar cita">
+        <h2 class="step-title">Confirmar cita</h2>
+        <p class="step-desc">Revise el resumen completo antes de registrar la cita.</p>
+        <div class="summary-card">
+          <div class="summary-row">
+            <span class="summary-label">Paciente</span>
+            <span class="summary-value" id="confirm-patient"></span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Documento</span>
+            <span class="summary-value mono" id="confirm-document"></span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Médico</span>
+            <span class="summary-value" id="confirm-doctor"></span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Especialidad</span>
+            <span class="summary-value" id="confirm-spec"></span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Fecha</span>
+            <span class="summary-value" id="confirm-date"></span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Hora</span>
+            <span class="summary-value mono" id="confirm-time"></span>
+          </div>
+        </div>
+        <div id="success-message" class="success-message hidden">
+          <p class="success-icon">✓</p>
+          <p class="success-text">Cita registrada exitosamente</p>
+        </div>
+        <div class="step-actions">
+          <button class="btn btn-secondary" id="back-to-3">Volver</button>
+          <button class="btn btn-primary" id="confirm-appointment">Registrar cita</button>
+          <button class="btn btn-secondary hidden" id="new-appointment">Nueva cita</button>
+        </div>
+      </section>
     </div>
 
-    <section id="appointments-section" class="appointments-section hidden" aria-label="Citas registradas">
+    <section id="appointments-section" class="appointments-section" aria-label="Citas registradas">
       <h2 class="section-title">Citas registradas</h2>
       <div class="table-wrapper">
         <table id="appointments-table">

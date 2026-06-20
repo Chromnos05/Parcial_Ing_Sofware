@@ -313,6 +313,11 @@ tbody tr:hover td {
   background-color: var(--card);
 }
 
+tbody td.mono {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
+}
+
 .doctor-list {
   display: flex;
   flex-direction: column;
@@ -504,4 +509,62 @@ tbody tr:hover td {
 .summary-value.mono {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 0.85rem;
+}
+
+.success-message {
+  background-color: var(--success);
+  color: var(--white);
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.success-icon {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.success-text {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 1.35rem;
+  }
+
+  .step-label {
+    font-size: 0.6rem;
+  }
+
+  .step-number {
+    width: 1.6rem;
+    height: 1.6rem;
+    font-size: 0.7rem;
+  }
+
+  .ledger-slot {
+    min-width: 4rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .summary-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.15rem;
+  }
+
+  .summary-value {
+    text-align: left;
+  }
+
+  .doctor-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
 }

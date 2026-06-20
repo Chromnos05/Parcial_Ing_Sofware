@@ -19,6 +19,8 @@ let medicoSeleccionado = null;
 let horarioSeleccionado = null;
 let horariosOcupados = [];
 
+let contadorCitas = 0;
+
 const searchInput = document.getElementById('search-patient');
 const patientList = document.getElementById('patient-list');
 const noResults = document.getElementById('no-results');
@@ -203,12 +205,86 @@ function renderizarStep3() {
   });
 }
 
+function renderizarStep4() {
+  document.getElementById('confirm-patient').textContent = pacienteSeleccionado.nombre;
+  document.getElementById('confirm-document').textContent = pacienteSeleccionado.documento;
+  document.getElementById('confirm-doctor').textContent = medicoSeleccionado.nombre;
+  document.getElementById('confirm-spec').textContent = medicoSeleccionado.especialidad;
+  document.getElementById('confirm-date').textContent = FECHA_CITA;
+  document.getElementById('confirm-time').textContent = horarioSeleccionado;
+
+  document.getElementById('success-message').classList.add('hidden');
+  document.getElementById('confirm-appointment').classList.remove('hidden');
+  document.getElementById('new-appointment').classList.add('hidden');
+}
+
+function registrarCita() {
+  // TODO(mantenimiento-correctivo): validar que el horario no esté ya ocupado antes de confirmar
+  contadorCitas++;
+  const cita = {
+    id: contadorCitas,
+    paciente: pacienteSeleccionado.nombre,
+    documento: pacienteSeleccionado.documento,
+    medico: medicoSeleccionado.nombre,
+    especialidad: medicoSeleccionado.especialidad,
+    fecha: FECHA_CITA,
+    hora: horarioSeleccionado,
+  };
+
+  horariosOcupados.push({
+    medicoId: medicoSeleccionado.id,
+    hora: horarioSeleccionado,
+  });
+
+  agregarCitaTabla(cita);
+
+  document.getElementById('success-message').classList.remove('hidden');
+  document.getElementById('confirm-appointment').classList.add('hidden');
+  document.getElementById('new-appointment').classList.remove('hidden');
+}
+
+function agregarCitaTabla(cita) {
+  const tbody = document.getElementById('appointments-body');
+  const noApptMsg = document.getElementById('no-appointments');
+
+  noApptMsg.classList.add('hidden');
+
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td>${cita.paciente}</td>
+    <td class="mono">${cita.documento}</td>
+    <td>${cita.medico}</td>
+    <td>${cita.especialidad}</td>
+    <td>${cita.fecha}</td>
+    <td class="mono">${cita.hora}</td>
+  `;
+  tbody.appendChild(tr);
+}
+
+function reiniciarFormulario() {
+  pacienteSeleccionado = null;
+  medicoSeleccionado = null;
+  horarioSeleccionado = null;
+  searchInput.value = '';
+  patientList.innerHTML = '';
+  noResults.classList.add('hidden');
+
+  document.getElementById('success-message').classList.add('hidden');
+  document.getElementById('confirm-appointment').classList.remove('hidden');
+  document.getElementById('new-appointment').classList.add('hidden');
+
+  renderizarDoctores();
+  avanzarPaso(1);
+}
+
 function avanzarPaso(paso) {
   const pasos = document.querySelectorAll('.step');
   const secciones = document.querySelectorAll('.wizard-step');
 
   if (paso === 3) {
     renderizarStep3();
+  } else if (paso === 4) {
+    renderizarStep4();
   }
 
   pasos.forEach(s => s.classList.remove('active', 'completed'));
@@ -253,3 +329,12 @@ document.getElementById('to-step-4').addEventListener('click', () => {
     avanzarPaso(4);
   }
 });
+
+document.getElementById('back-to-3').addEventListener('click', () => {
+  renderizarStep3();
+  avanzarPaso(3);
+});
+
+document.getElementById('confirm-appointment').addEventListener('click', registrarCita);
+
+document.getElementById('new-appointment').addEventListener('click', reiniciarFormulario);

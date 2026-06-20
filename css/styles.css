@@ -161,3 +161,154 @@ header h1 {
     transition: none;
   }
 }
+
+.step-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+
+.step-desc {
+  font-size: 0.9rem;
+  color: var(--gray);
+  margin-bottom: 1.5rem;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--light-gray);
+  border-radius: 8px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 1rem;
+  background-color: var(--white);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.search-box input:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(45, 106, 110, 0.15);
+}
+
+.patient-list {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.patient-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.85rem 1rem;
+  background-color: var(--card);
+  border: 2px solid transparent;
+  border-radius: 8px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.95rem;
+  cursor: pointer;
+  text-align: left;
+  color: var(--text);
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.patient-item:hover,
+.patient-item:focus-visible {
+  border-color: var(--teal);
+  background-color: var(--white);
+}
+
+.patient-item:focus-visible {
+  outline: 3px solid var(--teal);
+  outline-offset: 2px;
+}
+
+.patient-name {
+  font-weight: 500;
+}
+
+.patient-doc {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--gray);
+}
+
+.no-results {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--gray);
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.section-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+.appointments-section {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 2px solid var(--light-gray);
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+thead th {
+  background-color: var(--teal);
+  color: var(--white);
+  padding: 0.65rem 0.75rem;
+  text-align: left;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+thead th:first-child {
+  border-radius: 6px 0 0 0;
+}
+
+thead th:last-child {
+  border-radius: 0 6px 0 0;
+}
+
+tbody td {
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--light-gray);
+  background-color: var(--white);
+}
+
+tbody tr:hover td {
+  background-color: var(--card);
+}

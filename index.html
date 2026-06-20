@@ -40,11 +40,41 @@
     </nav>
 
     <div class="wizard">
-      <section class="wizard-step active" id="step-1" role="form" aria-label="Paso 1: Buscar paciente"></section>
+      <section class="wizard-step active" id="step-1" role="form" aria-label="Paso 1: Buscar paciente">
+        <h2 class="step-title">Buscar paciente</h2>
+        <p class="step-desc">Ingrese nombre o documento del paciente para verificar si está registrado.</p>
+        <div class="search-box">
+          <label for="search-patient" class="sr-only">Buscar paciente por nombre o documento</label>
+          <input type="text" id="search-patient" placeholder="Escriba nombre o documento…" autocomplete="off">
+        </div>
+        <div id="patient-list" class="patient-list" role="listbox" aria-label="Resultados de búsqueda"></div>
+        <p id="no-results" class="no-results hidden">No se encontraron pacientes.</p>
+      </section>
+
       <section class="wizard-step" id="step-2" role="form" aria-label="Paso 2: Seleccionar médico"></section>
       <section class="wizard-step" id="step-3" role="form" aria-label="Paso 3: Seleccionar horario"></section>
       <section class="wizard-step" id="step-4" role="form" aria-label="Paso 4: Confirmar cita"></section>
     </div>
+
+    <section id="appointments-section" class="appointments-section hidden" aria-label="Citas registradas">
+      <h2 class="section-title">Citas registradas</h2>
+      <div class="table-wrapper">
+        <table id="appointments-table">
+          <thead>
+            <tr>
+              <th>Paciente</th>
+              <th>Documento</th>
+              <th>Médico</th>
+              <th>Especialidad</th>
+              <th>Fecha</th>
+              <th>Hora</th>
+            </tr>
+          </thead>
+          <tbody id="appointments-body"></tbody>
+        </table>
+      </div>
+      <p id="no-appointments" class="no-results">No hay citas registradas aún.</p>
+    </section>
   </main>
 
   <script src="js/script.js"></script>
